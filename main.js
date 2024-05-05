@@ -5,7 +5,16 @@ const keyShoot = 87;
 const keyRight = 68;
 const keyLeft = 65;
 
-const state = {xPos: 0, yPos: 0, apples: [], shoot : false, moveRight : false, moveLeft : false, catWidth: 64}
+const state = { 
+    xPos: 0, 
+    yPos: 0, 
+    cooldown: 0, 
+    apples: [], 
+    shoot: false, 
+    moveRight: false, 
+    moveLeft: false, 
+    catWidth: 64 
+}
 
 //Mängija
 function createPlayer($container) {
@@ -30,6 +39,12 @@ function setSize($element, width) {
     $element.style.height = "auto";
 }
 
+function deleteApple(apples, apple, $apple) {
+    const index = apples.indexOf(apple);
+    apples.splice(index, 1);
+    $container.removeChild($apple);
+}
+
 function createApple($container, x, y) {
     const $apple = document.createElement("img");
     $apple.src = "img/oun.png";
@@ -45,6 +60,9 @@ function updateApple($container) {
     for(let i = 0; i < apples.length; i++) {
         const apple = apples[i];
         apple.y -= 2;
+        if(apple.y < 0) {
+            deleteApple(apples, apple, apple.$apple);
+        }
         setPosition(apple.$apple, apple.x, apple.y);
     }
 }
@@ -56,11 +74,15 @@ function updatePlayer() {
     if (state.moveRight && state.xPos <= 725) {
         state.xPos += 8;
     }
-    if(state.shoot) {
+    if(state.shoot && state.cooldown == 0) {
         createApple($container, state.xPos - state.catWidth / 2, state.yPos);
+        state.cooldown = 10;
     }
     const $player = document.querySelector(".player");
     setPosition($player, state.xPos, state.yPos);
+    if(state.cooldown > 0) {
+        state.cooldown -= 0.5;
+    }
 }
 
 //MAIN UPDATE
