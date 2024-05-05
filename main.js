@@ -30,8 +30,21 @@ function setSize($element, width) {
     $element.style.height = "auto";
 }
 
+function updatePlayer() {
+    if(state.moveLeft && state.xPos >= 5) {
+        state.xPos -= 8;
+    }
+    if (state.moveRight && state.xPos <= 725) {
+        state.xPos += 8;
+    }
+    const $player = document.querySelector(".player");
+    setPosition($player, state.xPos, state.yPos);
+}
+
 function update() {
-    // updatePlayer();
+    updatePlayer();
+
+    window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase
 
 }
 
@@ -49,18 +62,19 @@ function keyPress(event) {
 }
 
 function keyRelease(event) {
-    if(event.keyCode === keyRight) {state.moveRight = false;}
-    else if(event.keyCode === keyLeft) {state.moveLeft = false;}
+    if(event.keyCode === keyRight) {
+        state.moveRight = false;
+    }
+    else if(event.keyCode === keyLeft) {
+        state.moveLeft = false;
+    }
 }
 
 //listenerid
 window.addEventListener("keydown", keyPress);
 window.addEventListener("keyup", keyRelease);
 
-update();
-
-
-
 //MÄNG
 const $container = document.querySelector(".main");
 createPlayer($container);
+update();
