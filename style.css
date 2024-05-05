@@ -2,7 +2,9 @@ body {
     height: 100%;
     overflow: hidden;
     background-color: rgb(0, 0, 0);
-    color: white;
+    color: black;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 15px;
 }
 
 header {
@@ -43,8 +45,48 @@ footer {
 .main .apple {
     position: absolute;
     margin-left: -10px;
-    height: 30px;
+    height: 25px;
     z-index: -1;
+}
+
+.main .monsterApple {
+    position: absolute;
+    margin-left: -10px;
+    height: 20px;
+    z-index: -1;
+}
+
+.btn {
+    background-image: url(img/nupp.png);
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 15px;
+    color: black;
+}
+
+.main .monster {
+    position: absolute;
+}
+
+.lose {
+    display: none;
+    position: absolute;
+    text-align: center;
+    padding: 20px 50px;
+    background-color: #ffc107;
+    border-radius: 15px;
+    box-shadow: 3px 5px black;
+}
+
+.win {
+    display: none;
+    color: black;
+    position: absolute;
+    text-align: center;
+    padding: 20px 50px;
+    background-color:#ffc107;
+    border-radius: 15px;
+    box-shadow: 3px 5px black;
+ 
 }
 
 @keyframes scrollBackground {
