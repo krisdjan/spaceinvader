@@ -19,7 +19,8 @@ const state = {
     moveRight: false, 
     moveLeft: false, 
     catWidth: 64,
-    gameOver: false
+    gameOver: false,
+    gameStarted: false
 }
 
 //Mängija
@@ -177,22 +178,6 @@ function collideRect(rect1, rect2) {
         ||rect2.top > rect1.bottom || rect2.bottom < rect1.top);
 }
 
-//MAIN uuendus
-function update() {
-    updatePlayer();
-    updateApple($container);
-    updateMonsters($container);
-    updateMonsterApple();
-    window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase
-
-    if(state.gameOver) {
-        document.querySelector(".lose").style.display = 'block';
-    } if (state.monsters.length == 0) {
-        document.querySelector(".win").style.display = 'block';
-    }
-
-}
-
 
 //nupud
 function keyPress(event) {
@@ -220,6 +205,21 @@ function keyRelease(event) {
     } else if (event.keyCode === keyShoot) {
         state.shoot = false;
     }
+}
+
+//MAIN uuendus
+function update() {
+        updatePlayer();
+        updateApple($container);
+        updateMonsters($container);
+        updateMonsterApple();
+        window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase
+    
+        if(state.gameOver) {
+            document.querySelector(".lose").style.display = 'block';
+        } else if (state.monsters.length == 0) {
+            document.querySelector(".win").style.display = 'block';
+        }
 }
 
 //listenerid
