@@ -5,7 +5,7 @@ const keyShoot = 87;
 const keyRight = 68;
 const keyLeft = 65;
 
-const state = {xPos: 0, yPos: 0, moveRight : false, moveLeft : false, catWidth: 64}
+const state = {xPos: 0, yPos: 0, apples: [], shoot : false, moveRight : false, moveLeft : false, catWidth: 64}
 
 //Mängija
 function createPlayer($container) {
@@ -30,6 +30,25 @@ function setSize($element, width) {
     $element.style.height = "auto";
 }
 
+function createApple($container, x, y) {
+    const $apple = document.createElement("img");
+    $apple.src = "img/oun.png";
+    $apple.className = "apple";
+    $container.appendChild($apple);
+    const apple = {x, y, $apple};
+    state.apples.push(apple);
+    setPosition($apple, x, y);
+}
+
+function updateApple($container) {
+    const apples = state.apples;
+    for(let i = 0; i < apples.length; i++) {
+        const apple = apples[i];
+        apple.y -= 2;
+        setPosition(apple.$apple, apple.x, apple.y);
+    }
+}
+
 function updatePlayer() {
     if(state.moveLeft && state.xPos >= 5) {
         state.xPos -= 8;
@@ -37,12 +56,17 @@ function updatePlayer() {
     if (state.moveRight && state.xPos <= 725) {
         state.xPos += 8;
     }
+    if(state.shoot) {
+        createApple($container, state.xPos - state.catWidth / 2, state.yPos);
+    }
     const $player = document.querySelector(".player");
     setPosition($player, state.xPos, state.yPos);
 }
 
+//MAIN UPDATE
 function update() {
     updatePlayer();
+    updateApple($container);
 
     window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase
 
@@ -52,12 +76,15 @@ function update() {
 //nupud
 function keyPress(event) {
     if(event.keyCode === keyRight) {
-        console.log("parem");
+        // console.log("parem");
         state.moveRight = true;
     }
     else if(event.keyCode === keyLeft) {
-        console.log("vasak");
+        // console.log("vasak");
         state.moveLeft = true;
+    } else if (event.keyCode == keyShoot) {
+        // console.log("lask");
+        state.shoot = true;
     }
 }
 
@@ -67,6 +94,8 @@ function keyRelease(event) {
     }
     else if(event.keyCode === keyLeft) {
         state.moveLeft = false;
+    } else if (event.keyCode === keyShoot) {
+        state.shoot = false;
     }
 }
 

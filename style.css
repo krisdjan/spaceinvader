@@ -37,6 +37,14 @@ footer {
     background-color: aliceblue;
     background-image: url(img/taust.png);
     animation: scrollBackground 7s linear infinite;
+    z-index: 0;
+}
+
+.main .apple {
+    position: absolute;
+    margin-left: -10px;
+    height: 30px;
+    z-index: -1;
 }
 
 @keyframes scrollBackground {
