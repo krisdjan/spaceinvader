@@ -8,6 +8,8 @@ const keyLeft = 65;
 const defaultCatImg = "img/gleb.png";
 const shootCatImg = "img/gleb2.png";
 const shootSound = new Audio("src/piu.mp3");
+const gameOverSound = new Audio("src/glebKaotas.mp3");
+const gameWonSound = new Audio("src/glebVoitis.mp3");
 
 // const startBtn =  document.querySelector("strtBtn");
 
@@ -233,8 +235,10 @@ function update() {
         window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase ja callib updatei
     
         if(state.gameOver) {
+            gameOverSound.play();
             document.querySelector(".lose").style.display = 'block';
         } else if (state.monsters.length == 0) {
+            gameWonSound.play();
             document.querySelector(".win").style.display = 'block';
         }
 }
