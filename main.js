@@ -7,9 +7,12 @@ const keyLeft = 65;
 
 const defaultCatImg = "img/gleb.png";
 const shootCatImg = "img/gleb2.png";
-const shootSound = new Audio("src/piu.mp3");
+const shootSound1 = new Audio("src/piu1.mp3");
+const shootSound2 = new Audio("src/piu2.mp3");
 const gameOverSound = new Audio("src/glebKaotas.mp3");
 const gameWonSound = new Audio("src/glebVoitis.mp3");
+const monsterDeadSound = new Audio("src/kollDead.mp3");
+shootSound1.volume = 0.25;
 
 // const startBtn =  document.querySelector("strtBtn");
 
@@ -26,7 +29,7 @@ const state = {
     shoot: false, 
     moveRight: false, 
     moveLeft: false, 
-    catWidth: 64,
+    catWidth: 50,
     gameOver: false,
     gameStarted: true,
 }
@@ -75,9 +78,8 @@ function updatePlayer() {
     if(state.cooldown > 0) {
         state.cooldown -= 0.5;
     }
-    //Iga lasuga muudab pilti
     if(state.shoot) {
-        shootSound.play();
+        shootSound1.play();
         $player.src = shootCatImg;
         setTimeout(()=> {
             $player.src = defaultCatImg;
@@ -123,6 +125,7 @@ function updateApple($container) {
                 const index = monsters.indexOf(monster);
                 monsters.splice(index, 1);
                 $container.removeChild(monster.$monster);
+                monsterDeadSound.play();
             }
         }
     }
@@ -163,6 +166,7 @@ function updateMonsterApple() {
         const catRectangle = document.querySelector(".player").getBoundingClientRect();
         if(collideRect(catRectangle, monsterAppleRectangle)) {
             state.gameOver = true;
+            if(!gameOverSound.ended) {gameOverSound.play();}
         }
         setPosition(monsterApple.$monsterApple, monsterApple.x + state.monsterWidth / 2, monsterApple.y + 15);
     }
@@ -235,11 +239,13 @@ function update() {
         window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase ja callib updatei
     
         if(state.gameOver) {
-            gameOverSound.play();
             document.querySelector(".lose").style.display = 'block';
+            const $player = document.querySelector(".player");
+            $player.src = "img/glebSurnud.png";
+            if(!gameOverSound.ended) {gameOverSound.play();}
         } else if (state.monsters.length == 0) {
-            gameWonSound.play();
             document.querySelector(".win").style.display = 'block';
+            if(!gameWonSound.ended) {gameWonSound.play();}
         }
 }
 
