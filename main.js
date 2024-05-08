@@ -7,6 +7,7 @@ const keyLeft = 65;
 
 const defaultCatImg = "img/gleb.png";
 const shootCatImg = "img/gleb2.png";
+const shootSound = new Audio("src/piu.mp3");
 
 // const startBtn =  document.querySelector("strtBtn");
 
@@ -74,6 +75,7 @@ function updatePlayer() {
     }
     //Iga lasuga muudab pilti
     if(state.shoot) {
+        shootSound.play();
         $player.src = shootCatImg;
         setTimeout(()=> {
             $player.src = defaultCatImg;
