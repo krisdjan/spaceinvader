@@ -7,6 +7,8 @@ const keyLeft = 65;
 
 const defaultCatImg = "img/gleb.png";
 const shootCatImg = "img/gleb2.png";
+const glebVoitis = "img/glebVoitis.png";
+const glebKaotas = "img/glebSurnud.png";
 const shootSound1 = new Audio("src/piu1.mp3");
 const shootSound2 = new Audio("src/piu2.mp3");
 const gameOverSound = new Audio("src/glebKaotas.mp3");
@@ -241,10 +243,12 @@ function update() {
         if(state.gameOver) {
             document.querySelector(".lose").style.display = 'block';
             const $player = document.querySelector(".player");
-            $player.src = "img/glebSurnud.png";
+            $player.src = glebKaotas;
             if(!gameOverSound.ended) {gameOverSound.play();}
         } else if (state.monsters.length == 0) {
             document.querySelector(".win").style.display = 'block';
+            const $player = document.querySelector(".player");
+            $player.src = glebVoitis;
             if(!gameWonSound.ended) {gameWonSound.play();}
         }
 }
