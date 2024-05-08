@@ -5,6 +5,11 @@ const keyShoot = 87;
 const keyRight = 68;
 const keyLeft = 65;
 
+const defaultCatImg = "img/gleb.png";
+const shootCatImg = "img/gleb2.png";
+
+// const startBtn =  document.querySelector("strtBtn");
+
 const state = { 
     xPos: 0, 
     yPos: 0, 
@@ -20,15 +25,20 @@ const state = {
     moveLeft: false, 
     catWidth: 64,
     gameOver: false,
-    gameStarted: false
+    gameStarted: true,
 }
 
 //Mängija
+
+function setImage($container, img) {
+    $container.src = img;
+}
+
 function createPlayer($container) {
     state.xPos = gameWidth / 2;
     state.yPos = gameHeight - 70;
     const $player = document.createElement("img");
-    $player.src = "img/gleb.png";
+    $player.src = defaultCatImg;
     $player.className = "player";
     $container.appendChild($player);
     setPosition($player, state.xPos, state.yPos);
@@ -62,6 +72,14 @@ function updatePlayer() {
     if(state.cooldown > 0) {
         state.cooldown -= 0.5;
     }
+    //Iga lasuga muudab pilti
+    if(state.shoot) {
+        $player.src = shootCatImg;
+        setTimeout(()=> {
+            $player.src = defaultCatImg;
+        }, 100);
+    }
+    
 }
 
 
@@ -145,9 +163,8 @@ function updateMonsterApple() {
         setPosition(monsterApple.$monsterApple, monsterApple.x + state.monsterWidth / 2, monsterApple.y + 15);
     }
 }
-
+   // ~~~~~~~~~~~~~~ laenatud
 function updateMonsters($container) {
-    // ~~~~~~~~~~~~~~ laenatud
     const dx = Math.sin(Date.now()/1000) * 40; 
     const dy = Math.cos(Date.now()/1000) * 30;
     const monsters = state.monsters;
@@ -185,8 +202,7 @@ function keyPress(event) {
         if(event.keyCode === keyRight) {
             // console.log("parem");
             state.moveRight = true;
-        }
-        else if(event.keyCode === keyLeft) {
+        } else if(event.keyCode === keyLeft) {
             // console.log("vasak");
             state.moveLeft = true;
         } else if (event.keyCode == keyShoot) {
@@ -199,8 +215,7 @@ function keyPress(event) {
 function keyRelease(event) {
     if(event.keyCode === keyRight) {
         state.moveRight = false;
-    }
-    else if(event.keyCode === keyLeft) {
+    } else if(event.keyCode === keyLeft) {
         state.moveLeft = false;
     } else if (event.keyCode === keyShoot) {
         state.shoot = false;
@@ -213,7 +228,7 @@ function update() {
         updateApple($container);
         updateMonsters($container);
         updateMonsterApple();
-        window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase
+        window.requestAnimationFrame(update); //iga framei tagant joonistab uue canvase ja callib updatei
     
         if(state.gameOver) {
             document.querySelector(".lose").style.display = 'block';

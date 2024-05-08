@@ -89,6 +89,17 @@ footer {
  
 }
 
+/* .startScreen {
+    display: none;
+    color: black;
+    position: absolute;
+    text-align: center;
+    padding: 20px 50px;
+    background-color:#ffc107;
+    border-radius: 15px;
+    box-shadow: 3px 5px black;
+} */
+
 
 @keyframes scrollBackground {
     from {
