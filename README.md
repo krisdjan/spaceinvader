@@ -1,6 +1,6 @@
 # Kass Gleb Päästab Maailma
 Space invaders spinoff
-Mäng: 
+### Mäng: http://tlu.ee/~krisdjan/eesrakendused/spaceinvader
 ## Lugu
 Kollid tulid kosmosest maale, kes tahavad hävitada kassi nimega Gleb, lastes teda mäda õuntega. Gleb laseb vastu värskeid õunu ning proovib hävitada kollid.
 ## pildid
