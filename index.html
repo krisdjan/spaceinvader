@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kass Gleb Päästab Maailma</title>
     <link rel="stylesheet" href="style.css">
+    <audio src="src/gameMusic.mp3" id="gameMusic" loop preload="auto" allow="autoplay"></audio>
 </head>
 <body>
 
@@ -23,19 +24,9 @@
                 <div class="lose">
                     <h1>Gleb kaotas</h1>
                     <button class="btn" onclick="window.location.reload()">Proovi uuesti</button>
-                </div>
-                <audio src="src/gameMusic.mp3" id="gameMusic" loop preload="auto"></audio>
+                </div> 
         </div>
         <script src="main.js"></script>
-        <script>
-            // ei saanud mainis tööle 
-            window.onload = function() {
-                var gameMusic = document.getElementById("gameMusic");
-                gameMusic.volume = 0.5;
-                gameMusic.currentTime = 0;
-                gameMusic.play();
-            }
-        </script>
     </div>
 </body>
 </html>

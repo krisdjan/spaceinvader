@@ -14,6 +14,8 @@ const shootSound2 = new Audio("src/piu2.mp3");
 const gameOverSound = new Audio("src/glebKaotas.mp3");
 const gameWonSound = new Audio("src/glebVoitis.mp3");
 const monsterDeadSound = new Audio("src/kollDead.mp3");
+const gameMusic = document.getElementById("gameMusic");
+gameMusic.volume = 0.5;
 shootSound1.volume = 0.25;
 monsterDeadSound.volume = 0.5;
 
@@ -249,6 +251,7 @@ function update() {
             if(!gameOverSound.ended) {
                 gameOverSound.play();
                 gameMusic.pause();
+                gameMusic.volume = 0;
             }
         } else if (state.monsters.length == 0) {
             document.querySelector(".win").style.display = 'block';
@@ -266,11 +269,14 @@ function update() {
 }
 
 //music
-
+function playMusic() {
+    gameMusic.play();
+}
 
 //listenerid
 window.addEventListener("keydown", keyPress);
 window.addEventListener("keyup", keyRelease);
+window.addEventListener("click", playMusic);
 
 //MÄNG
 const $container = document.querySelector(".main");
