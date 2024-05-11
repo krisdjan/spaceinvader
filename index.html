@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class = "wrap">
         <header> Kass Gleb Päästab Maailma</header>
         <div class = "gameWrap">
             <div class = "main"></div>
-                <!-- <div class = "startScreen">
+                <div class = "startScreen">
                     <h1>Kass Gleb Päästab Maailma</h1>
-                    <button class="btn" id="startBtn">Start</button>
-                </div> -->
+                    <button class="btn" id="startBtn" onclick="startGame()">Start</button>
+                </div>
                 <div class="win">
                     <h1>Gleb on kangelane</h1>
                     <button class="btn" onclick="window.location.reload()">Mängi uuesti</button>
@@ -23,9 +24,18 @@
                     <h1>Gleb kaotas</h1>
                     <button class="btn" onclick="window.location.reload()">Proovi uuesti</button>
                 </div>
+                <audio src="src/gameMusic.mp3" id="gameMusic" loop preload="auto"></audio>
         </div>
-        <footer></footer>
         <script src="main.js"></script>
+        <script>
+            // ei saanud mainis tööle 
+            window.onload = function() {
+                var gameMusic = document.getElementById("gameMusic");
+                gameMusic.volume = 0.5;
+                gameMusic.currentTime = 0;
+                gameMusic.play();
+            }
+        </script>
     </div>
 </body>
 </html>

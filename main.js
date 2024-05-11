@@ -15,8 +15,7 @@ const gameOverSound = new Audio("src/glebKaotas.mp3");
 const gameWonSound = new Audio("src/glebVoitis.mp3");
 const monsterDeadSound = new Audio("src/kollDead.mp3");
 shootSound1.volume = 0.25;
-
-// const startBtn =  document.querySelector("strtBtn");
+monsterDeadSound.volume = 0.5;
 
 const state = { 
     xPos: 0, 
@@ -33,24 +32,11 @@ const state = {
     moveLeft: false, 
     catWidth: 50,
     gameOver: false,
-    gameStarted: true,
+    gameStarted: false
 }
 
-//Mängija
-
-function setImage($container, img) {
-    $container.src = img;
-}
-
-function createPlayer($container) {
-    state.xPos = gameWidth / 2;
-    state.yPos = gameHeight - 70;
-    const $player = document.createElement("img");
-    $player.src = defaultCatImg;
-    $player.className = "player";
-    $container.appendChild($player);
-    setPosition($player, state.xPos, state.yPos);
-    setSize($player, state.catWidth);
+function startGame() {
+    state.gameStarted = true;
 }
 
 //Määrab asukoha koordinaatide järgi
@@ -62,6 +48,22 @@ function setPosition($element, x, y) {
 function setSize($element, width) {
     $element.style.width = `${width}px`;
     $element.style.height = "auto";
+}
+
+function setImage($container, img) {
+    $container.src = img;
+}
+
+//Mängija
+function createPlayer($container) {
+    state.xPos = gameWidth / 2;
+    state.yPos = gameHeight - 70;
+    const $player = document.createElement("img");
+    $player.src = defaultCatImg;
+    $player.className = "player";
+    $container.appendChild($player);
+    setPosition($player, state.xPos, state.yPos);
+    setSize($player, state.catWidth);
 }
 
 function updatePlayer() {
@@ -87,9 +89,7 @@ function updatePlayer() {
             $player.src = defaultCatImg;
         }, 100);
     }
-    
 }
-
 
 //Õunad(ehk kuulid)
 function deleteApple(apples, apple, $apple) {
@@ -166,14 +166,14 @@ function updateMonsterApple() {
         }
         const monsterAppleRectangle = monsterApple.$monsterApple.getBoundingClientRect();
         const catRectangle = document.querySelector(".player").getBoundingClientRect();
-        if(collideRect(catRectangle, monsterAppleRectangle)) {
+        if(collideRect(catRectangle, monsterAppleRectangle) && state.monsters.length != 0) {
             state.gameOver = true;
             if(!gameOverSound.ended) {gameOverSound.play();}
         }
         setPosition(monsterApple.$monsterApple, monsterApple.x + state.monsterWidth / 2, monsterApple.y + 15);
     }
 }
-   // ~~~~~~~~~~~~~~ laenatud
+   // ~~~~~~~~~~~~~~ laenatud 
 function updateMonsters($container) {
     const dx = Math.sin(Date.now()/1000) * 40; 
     const dy = Math.cos(Date.now()/1000) * 30;
@@ -234,6 +234,8 @@ function keyRelease(event) {
 
 //MAIN uuendus
 function update() {
+    if (state.gameStarted) {
+        document.querySelector(".startScreen").style.display = "none";
         updatePlayer();
         updateApple($container);
         updateMonsters($container);
@@ -244,14 +246,27 @@ function update() {
             document.querySelector(".lose").style.display = 'block';
             const $player = document.querySelector(".player");
             $player.src = glebKaotas;
-            if(!gameOverSound.ended) {gameOverSound.play();}
+            if(!gameOverSound.ended) {
+                gameOverSound.play();
+                gameMusic.pause();
+            }
         } else if (state.monsters.length == 0) {
             document.querySelector(".win").style.display = 'block';
             const $player = document.querySelector(".player");
             $player.src = glebVoitis;
-            if(!gameWonSound.ended) {gameWonSound.play();}
+            if(!gameWonSound.ended) {
+                gameWonSound.play();
+                gameMusic.volume = 0.2;
+            }
         }
+    } else {
+        document.querySelector(".startScreen").style.display = "block";
+        window.requestAnimationFrame(update);
+    }
 }
+
+//music
+
 
 //listenerid
 window.addEventListener("keydown", keyPress);
